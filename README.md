@@ -1,0 +1,1 @@
+Chess puzzle in Haskell
