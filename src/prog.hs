@@ -28,12 +28,12 @@ defaultRookPiece = (Rook, (4, 4))
 rookTest = TestCase (assertBool "Rook test" (all (\y -> pieceCollide defaultRookPiece y) rookCollided) )
 rookTest2 = TestCase (assertBool "Rook test" (not (any (\y -> pieceCollide defaultRookPiece y) rookNotCollided)) )
 
+
 data PieceType = Queen | Rook deriving (Eq, Ord, Show)
 
 pieceCollide :: (PieceType, (Int, Int)) -> (Int, Int) -> Bool
 pieceCollide (Queen, (x, y)) (a, b) = (x == a) || (y == b) || abs(x - a) == abs(y - b)
 pieceCollide (Rook, (x, y)) (a, b) = (x == a) || (y == b)
-
 tests = TestList [TestLabel "test1" test1
                  ,TestLabel "test2" test2
                  ,TestLabel "test3" test3
