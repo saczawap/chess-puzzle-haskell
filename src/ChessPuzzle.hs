@@ -1,4 +1,4 @@
-module ChessPuzzle(solve) where
+module ChessPuzzle(solve, Solution) where
 
 import Test.HUnit
 import PieceType
@@ -12,7 +12,6 @@ type Solution = [(PieceType, (Int, Int))]
 
 collide :: (PieceType, (Int, Int)) -> [(PieceType, (Int, Int))] -> Bool
 collide piece fieldList = any (\(_, field) -> pieceCollide piece field) fieldList
-
 
 
 sol :: [(Int, Int)] -> [PieceType]-> Solution -> [Solution]
