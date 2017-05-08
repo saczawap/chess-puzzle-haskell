@@ -1,11 +1,22 @@
-module PieceType (PieceType(..), pieceCollide) where
+module PieceType (PieceType(..), pieceCollide, Point) where
 
 import Data.List
+type Point = (Int, Int)
 
 data PieceType = Queen | Rook | King | Bishop | Knight deriving (Eq, Ord, Show)
+
 pieceCollide :: (PieceType, (Int, Int)) -> (Int, Int) -> Bool
-pieceCollide (Queen, (x, y)) (a, b) = (x == a) || (y == b) || abs(x - a) == abs(y - b)
-pieceCollide (Rook, (x, y)) (a, b) = (x == a) || (y == b)
-pieceCollide (King, (x, y)) (a, b) = (abs (x - a) <= 1) && (abs (y - b) <= 1)
-pieceCollide (Bishop, (x, y)) (a, b) = abs(x - a) == abs(y - b)
-pieceCollide (Knight, (x, y)) (a, b) = ((abs (x - a) == 1) && (abs (y - b) == 2)) || ((abs (x - a) == 2) && (abs (y - b) == 1))
+pieceCollide (Queen, p1) p2 = (onStraightLine p1 p2) || (onDiagonal p1 p2)
+pieceCollide (Rook, p1) p2 = onStraightLine p1 p2
+pieceCollide (King, (x1, y1)) (x2, y2) = 
+    (abs (x1 - x2) <= 1) && (abs (y1 - y2) <= 1)
+pieceCollide (Bishop, p1) p2 = onDiagonal p1 p2
+pieceCollide (Knight, (x1, y1)) (x2, y2) = 
+    ((abs (x1 - x2) == 1) && (abs (y1 - y2) == 2)) || 
+        ((abs (x1 - x2) == 2) && (abs (y1 - y2) == 1))
+
+onStraightLine :: Point -> Point -> Bool
+onStraightLine (x1, y1) (x2, y2) = (x1 == x2) || (y1 == y2)
+
+onDiagonal :: Point -> Point -> Bool
+onDiagonal (x1, y1) (x2, y2) = abs(x1 - x2) == abs(y1 - y2)
