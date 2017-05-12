@@ -11,15 +11,19 @@ genSpace x y = [(a, b) | a <- [1..x], b <- [1..y]]
 type Solution = [(PieceType, (Int, Int))]
 
 collide :: (PieceType, (Int, Int)) -> [(PieceType, (Int, Int))] -> Bool
-collide piece@(newPt, newCoord) fieldList = any (\existing@(pt, field) -> (pieceCollide piece field) || (pieceCollide existing newCoord)) fieldList
+collide piece@(newPt, newCoord) = any (\(_pt, field) -> pieceCollide piece field)
 
 
 sol :: [(Int, Int)] -> [PieceType]-> Solution -> [Solution]
 sol _ [] found = [found]
 sol [] _ _found = []
 sol (firstField : spaceLeft) allPieces@(nextPiece : piecesLeft) found
-        | collide (nextPiece, firstField) found = sol spaceLeft allPieces found
-        | otherwise = sol spaceLeft piecesLeft ((nextPiece, firstField) : found) ++ sol spaceLeft allPieces found
+        | collide (nextPiece, firstField) found = otherSolutions
+        | otherwise = sol (trimSpace spaceLeft (nextPiece, firstField)) piecesLeft ((nextPiece, firstField) : found) ++ otherSolutions
+        where otherSolutions = sol spaceLeft allPieces found
+
+trimSpace :: [Point] -> (PieceType, Point)  -> [Point]
+trimSpace a b = filter (not . pieceCollide b) a
 
 solve :: Int -> Int -> [(PieceType, Int)] -> [Solution]
 solve x y pieces = List.concatMap (\z -> sol (genSpace x y) z []) (producePieces pieces)
