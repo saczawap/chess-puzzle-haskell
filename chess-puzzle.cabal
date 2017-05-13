@@ -2,13 +2,9 @@ name:                chess-puzzle
 version:             0.1.0.0
 -- synopsis:
 -- description:
-homepage:            https://github.com/githubuser/chess-puzzle#readme
-license:             BSD3
-license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2017 Author name here
-category:            Web
+homepage:            https://github.com/saczawap/chess-puzzle-haskel
+author:              Paweł Sączawa
+maintainer:          saczawap@gmail.com
 build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
@@ -45,4 +41,4 @@ test-suite chess-puzzle-test
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/chess-puzzle
+  location: https://github.com/saczawap/chess-puzzle-haskell
